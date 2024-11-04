@@ -12,19 +12,19 @@ import static pageobjects.HomePage.*;
 
 public class SeleniumUiTests extends BaseTest {
 
-    @Test()
-    public static void amazonLogin() {
+    @Test(invocationCount = 0)
+    public void amazonLogin() {
         driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
-        Assert.assertEquals("Online Shopping site in India: Shop Online for Mobiles, Books, Watches, Shoes and More - Amazon.in", driver.getTitle());
+        Assert.assertEquals("Online Shopping site in India: Shop Online for Mobiles, Books, Watches, Shoes and More - Amazon.in", driver.getTitle().trim());
         Actions action = new Actions(driver);
         action.moveToElement(getSignInPopupToHover()).perform();
         signInButton().click();
-        explicitWait().until(ExpectedConditions.visibilityOf(emailField()));
-        emailField().sendKeys(property.getProperty("email"));
+        explicitlyWait().until(ExpectedConditions.visibilityOf(emailField()));
+        emailField().sendKeys(property.getProperty("amz_email"));
         continueBtn().click();
-        explicitWait().until(ExpectedConditions.visibilityOf(passwordField()));
-        explicitWait().until(ExpectedConditions.elementToBeClickable(passwordField()));
-        passwordField().sendKeys(property.getProperty("password"));
+        explicitlyWait().until(ExpectedConditions.visibilityOf(passwordField()));
+        explicitlyWait().until(ExpectedConditions.elementToBeClickable(passwordField()));
+        passwordField().sendKeys(property.getProperty("amz_password"));
         if (keepMeSignedInCheckBox().isDisplayed()) {
             if (keepMeSignedInCheckBox().isSelected()) {
                 signInBtn().click();
@@ -36,6 +36,11 @@ public class SeleniumUiTests extends BaseTest {
         } else {
 //            signInBtn().click();
         }
-//        Assert.assertEquals(otpMessage().getText(), "For your security, we have sent the code to your phone ***-***-**27.");
+//        Assert.assertEquals(otpMessage().getText().trim(), "For your security, we have sent the code to your phone ***-***-**27.");
+    }
+
+    @Test(invocationCount = 1)
+    public void makeMyTrip() {
+        System.out.println("i am cool");
     }
 }

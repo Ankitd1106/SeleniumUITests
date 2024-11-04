@@ -23,44 +23,55 @@ public class BaseTest {
     public static FileReader readFile;
     public static SoftAssert softAssert;
 
+
     @BeforeTest
-    public void setUp() throws IOException {
+    public void setUp() {
+        try {
+            loadProperties();
+            initializeDriver();
+        } catch (IOException e) {
+            Reporter.log("Error loading configuration file: " + e.getMessage(), true);
+        }
+    }
+
+    private void loadProperties() throws IOException {
         if (driver == null) {
             readFile = new FileReader(System.getProperty("user.dir") + "/src/test/resource/config/config.properties");
             property.load(readFile);
         }
-        if (property.getProperty("browser").equalsIgnoreCase("chrome")) {
+    }
+
+    private void initializeDriver() {
+        String browser = property.getProperty("browser");
+        if (browser.equalsIgnoreCase("chrome")) {
             WebDriverManager.chromedriver().setup();
             driver = new ChromeDriver();
-            driver.get(property.getProperty("url"));
-            driver.manage().window().maximize();
-            Reporter.log(property.getProperty("url")+" launched in chrome browser successfullly", false);
-        } else if (property.getProperty("browser").equalsIgnoreCase("firefox")) {
+        } else if (browser.equalsIgnoreCase("firefox")) {
             WebDriverManager.firefoxdriver().setup();
             driver = new FirefoxDriver();
-            driver.get(property.getProperty("url"));
-            driver.manage().window().maximize();
-            Reporter.log(property.getProperty("url")+" launched in firefox browser successfullly", false);
-
         }
+
+        driver.get(property.getProperty("url"));
+        driver.manage().window().maximize();
+        Reporter.log(property.getProperty("url") + " launched in " + browser + " browser successfully", false);
     }
 
     @AfterTest
     public void quit() {
         if (driver != null) {
             driver.quit();
-            Reporter.log("Driver closed successfullly", false);
+            Reporter.log("Driver closed successfully", false);
         }
     }
 
-    public static WebDriverWait explicitWait() {
-        return new WebDriverWait(driver, Duration.ofSeconds(10));
+    public WebDriverWait explicitlyWait() {
+        return new WebDriverWait(driver, Duration.ofSeconds(Integer.parseInt(property.getProperty("explicitWaitTimeout"))));
     }
 
-    public static FluentWait<WebDriver> fluentWait() {
+    public FluentWait<WebDriver> fluentlyWait() {
         return new FluentWait<>(driver)
-                .withTimeout(Duration.ofSeconds(15))
-                .pollingEvery(Duration.ofSeconds(3))
+                .withTimeout(Duration.ofSeconds(Integer.parseInt(property.getProperty("fluentWaitTimeout"))))
+                .pollingEvery(Duration.ofSeconds(Integer.parseInt(property.getProperty("pollingInterval"))))
                 .ignoring(NoSuchElementException.class);
     }
 }
