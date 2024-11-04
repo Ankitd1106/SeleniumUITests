@@ -42,5 +42,6 @@ public class SeleniumUiTests extends BaseTest {
     @Test(invocationCount = 1)
     public void makeMyTrip() {
         System.out.println("i am cool");
+        System.out.println("i am also cool");
     }
 }
