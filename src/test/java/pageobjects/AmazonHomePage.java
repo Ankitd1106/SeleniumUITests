@@ -4,7 +4,7 @@ import base.BaseTest;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-public class HomePage extends BaseTest {
+public class AmazonHomePage extends BaseTest {
 
     public static WebElement getSignInPopupToHover() {
         return driver.findElement(By.xpath("//a[@id='nav-link-accountList']"));

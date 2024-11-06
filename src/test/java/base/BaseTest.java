@@ -5,6 +5,7 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Reporter;
@@ -22,6 +23,7 @@ public class BaseTest {
     public static Properties property = new Properties();
     public static FileReader readFile;
     public static SoftAssert softAssert;
+    public static Actions action;
 
 
     @BeforeTest
@@ -36,7 +38,7 @@ public class BaseTest {
 
     private void loadProperties() throws IOException {
         if (driver == null) {
-            readFile = new FileReader(System.getProperty("user.dir") + "/src/test/resource/config/config.properties");
+            readFile = new FileReader(System.getProperty("user.dir") + "/src/test/resource/config/data.properties");
             property.load(readFile);
         }
     }
@@ -46,20 +48,18 @@ public class BaseTest {
         if (browser.equalsIgnoreCase("chrome")) {
             WebDriverManager.chromedriver().setup();
             driver = new ChromeDriver();
+            driver.manage().window().maximize();
         } else if (browser.equalsIgnoreCase("firefox")) {
             WebDriverManager.firefoxdriver().setup();
             driver = new FirefoxDriver();
+            driver.manage().window().maximize();
         }
-
-        driver.get(property.getProperty("url"));
-        driver.manage().window().maximize();
-        Reporter.log(property.getProperty("url") + " launched in " + browser + " browser successfully", false);
     }
 
     @AfterTest
     public void quit() {
         if (driver != null) {
-            driver.quit();
+//            driver.quit();
             Reporter.log("Driver closed successfully", false);
         }
     }
