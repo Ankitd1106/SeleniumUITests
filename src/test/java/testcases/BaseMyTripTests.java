@@ -9,12 +9,9 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import java.time.Duration;
+import static pageobjects.EaseMyTripHomePage.*;
 
-import static org.testng.TestRunner.PriorityWeight.priority;
-import static pageobjects.easeMyTripHomePage.*;
-
-public class easeMyTripTests extends BaseTest {
+public class BaseMyTripTests extends BaseTest {
 
     @BeforeMethod
     public void hitUrl() {
@@ -33,21 +30,25 @@ public class easeMyTripTests extends BaseTest {
         Thread.sleep(3000);
         customerLoginMenuOption().click();
         explicitlyWait().until(ExpectedConditions.visibilityOf(loginPopup()));
+        System.out.println("login pop up displayed ="+loginPopup().isDisplayed());
         explicitlyWait().until(ExpectedConditions.visibilityOf(emailIdField()));
+        System.out.println("email field displayed ="+emailIdField().isDisplayed());
         explicitlyWait().until(ExpectedConditions.visibilityOf(continueButton()));
+        System.out.println("continue displayed ="+continueButton().isDisplayed());
         emailIdField().sendKeys(property.getProperty("emt_email"));
-        Thread.sleep(10000);
+        Thread.sleep(5000);
         System.out.println("email");
         continueButton().click();
-//        System.out.println("continue");
-        Thread.sleep(20000);
+        System.out.println("continue");
+        Thread.sleep(5000);
         explicitlyWait().until(ExpectedConditions.visibilityOf(passwordField()));
+        System.out.println("password field displayed ="+passwordField().isDisplayed());
         passwordField().sendKeys(property.getProperty("emt_password"));
-//        System.out.println("passwedf");
-        Thread.sleep(10000);
+        System.out.println("passwedf");
+        Thread.sleep(5000);
         loginButton().click();
-        Thread.sleep(15000);
-//        System.out.println("login");
+        Thread.sleep(5000);
+        System.out.println("login");
         Assert.assertTrue(confirmLogin().isDisplayed());
         softAssert.assertAll();
     }

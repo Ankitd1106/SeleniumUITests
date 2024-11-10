@@ -4,7 +4,7 @@ import base.BaseTest;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-public class easeMyTripHomePage extends BaseTest {
+public class EaseMyTripHomePage extends BaseTest {
 
     public static WebElement flightMenuOption() {
         return driver.findElement(By.xpath("//a[contains(@href,'flights.html') and @class='_actvrmenu']"));

@@ -3,8 +3,27 @@
 <suite name="All Test Suite">
     <test verbose="2" preserve-order="true" name="/Users/ankitdas/IdeaProjects/SeleniumUITest">
         <classes>
-            <class name="testcases.AmazonTests"/>
-            <class name="testcases.easeMyTripTests"/>
+            <class name="testcases.AmazonTests">
+                <methods>
+                    <include name="login"/>
+                </methods>
+            </class>
+            <class name="testcases.BaseMyTripTests">
+                <methods>
+                    <include name="easeMyTripFlightBooking"/>
+                    <include name="selectAndBookFlights"/>
+                </methods>
+            </class>
+            <class name="testcases.BstackDemoTests">
+                <methods>
+                    <include name="omayoTests"/>
+                </methods>
+            </class>
+            <class name="testcases.PracticeTests">
+                <methods>
+                    <include name="omayoTests"/>
+                </methods>
+            </class>
         </classes>
     </test>
 </suite>
